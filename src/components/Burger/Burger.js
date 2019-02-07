@@ -21,7 +21,7 @@ const burger = (props) => {
     });*/
     
 
-    const transformedIngredients = Object.keys(props.ingredients).map(igKey => {
+    let transformedIngredients = Object.keys(props.ingredients).map(igKey => {
         //console.log(props.ingredients);
         //console.log(props.ingredients[igKey]);// 1, 1, 2, 2 the numbers
     
@@ -31,6 +31,25 @@ const burger = (props) => {
         });
     });
 
+    console.log(transformedIngredients);
+    // To check if there is anything inside, we flatten the array 
+    // takes every array inside one by one, and checks if there is sg inside
+    /*
+    transformedIngredients.reduce((arr, el) => {
+        return arr.concat(el)
+    }, [])*/
+
+    // We can also use filter:
+
+    let flattenned = transformedIngredients.filter(memberarr => {
+        return memberarr.length > 0
+    })
+    console.log(flattenned);
+
+    // if there is no ingredient added:
+    if (flattenned.length === 0) {
+        transformedIngredients = <p>Please start adding ingredients</p>
+    }
 
     return (
         <div className={classes.Burger}>
