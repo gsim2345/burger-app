@@ -7,7 +7,10 @@ const toolbar = (props) => (
     // we can set the logo height as props
     <header className={classes.Toolbar}>
         <div>MENU</div>
-        <Logo height='80%'/>
+        <div className={classes.Logo}>
+            <Logo/>
+        </div>
+        
         <nav>
             <NavigationItems/>
         </nav>
