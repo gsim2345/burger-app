@@ -5,6 +5,20 @@ import Backdrop from '../Backdrop/Backdrop';
 
 // turning modal component to class component, to be able to implement shouldComponentUpdate
 class Modal extends Component {
+
+    shouldComponentUpdate(nextProps, nextState) {
+        // only need to update, if show changes
+        if (nextProps.show !== this.props.show) {
+            return true;
+        } else {
+            return false;
+        }
+        // return nextProps.show !== this.props.show
+    }
+
+    componentDidUpdate() {
+        console.log('[Modal] DidUpdate');
+    }
     render() {
         return (
             <>
