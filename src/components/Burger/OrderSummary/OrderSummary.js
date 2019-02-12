@@ -6,6 +6,10 @@ import Button from '../../UI/Button/Button';
 // turn into Class component, so we can add lifecycle hooks, and to see when it's updated
 class OrderSummary extends Component {
 
+    componentDidUpdate() {
+        // OrderSummary updates even though not showing, doesn't need to rerender. We can stop that in modal. 
+        console.log('[OrderSummary] componentDidUpdate'  );
+    }
     
     render() {
         const ingredientSummary = Object.keys(this.props.ingredients).map(igKey => {
