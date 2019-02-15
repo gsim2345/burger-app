@@ -1,6 +1,6 @@
 
 import React, {Component} from 'react';
-import Aux from '../../../hoc/Aux';
+import Aux from '../../../hoc/Aux/Aux';
 import Button from '../../UI/Button/Button';
 
 // turn into Class component, so we can add lifecycle hooks, and to see when it's updated
