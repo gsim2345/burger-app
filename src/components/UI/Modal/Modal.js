@@ -8,7 +8,8 @@ class Modal extends Component {
 
     shouldComponentUpdate(nextProps, nextState) {
         // only need to update, if show changes
-        if (nextProps.show !== this.props.show) {
+        // or gets new children in the modal (a.k.a spinner)
+        if (nextProps.show !== this.props.show || nextProps.children !== this.props.children) {
             return true;
         } else {
             return false;
