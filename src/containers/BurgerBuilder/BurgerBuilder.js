@@ -5,6 +5,7 @@ import BuildControls from '../../components/Burger/BuildControls/BuildControls';
 import Modal from '../../components/UI/Modal/Modal';
 import OrderSummary from '../../components/Burger/OrderSummary/OrderSummary'
 import Spinner from '../../components/UI/Spinner/Spinner';
+import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
 import axios from '../../axios-orders';
 
 const INGREDIENT_PRICES = {
@@ -115,7 +116,7 @@ class BurgerBuilder extends Component {
 
         }
         // we send data to the database - anyname.json(.json needed because of firebase)
-        axios.post('/orders.json', order)
+        axios.post('/orders.jsonnn', order)
             .then(response => {
                 console.log(response);
                 // stop spinner
@@ -173,4 +174,5 @@ class BurgerBuilder extends Component {
     }
 }
 
-export default BurgerBuilder;
+// exporting the axios instance we use
+export default withErrorHandler(BurgerBuilder, axios);
