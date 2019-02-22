@@ -20,16 +20,21 @@ class BurgerBuilder extends Component {
     //    this.state = {...}
     //}
     state = {
-        ingredients: {
-            salad: 0,
-            bacon: 0, 
-            cheese:0,
-            meat:0
-        },
+        // we set ingredients to null, we get it from database from now on.
+        ingredients: null,
         totalPrice: 4,
         purchasable: false,
         purchasing:false,
         loading: false
+    }
+
+    // best place to fetch data: componentDidMount
+    componentDidMount() {
+        // we set the ingredients from the database
+        axios.get('https://react-my-burger-e8a39.firebaseio.com/ingredients.json')
+        .then(response => {
+            this.setState({ingredients: response.data});
+        });
     }
 
     updatePurchaseState = (ingredients) => {
@@ -116,7 +121,7 @@ class BurgerBuilder extends Component {
 
         }
         // we send data to the database - anyname.json(.json needed because of firebase)
-        axios.post('/orders.jsonnn', order)
+        axios.post('/orders.json', order)
             .then(response => {
                 console.log(response);
                 // stop spinner
