@@ -10,7 +10,9 @@ const withErrorHandler = (WrappedComponent, axios) => {
             error: null
         }
 
-        componentDidMount() {
+        // this componentDidMount will only be called after in the child components (wrappedComponent - (BurgerBuilder)) componentDidMount was called. In that component's componentDidMount  we also reach out to the web, and as the interceptors are set up here, they are not yet set when we reach out to the web in BurgerBuilder => can't handle errors 
+        // we change componentDidMount to componentWillMount, because it's called before the child components are being rendered. 
+        componentWillMount() {
             axios.interceptors.request.use(req => {
                 // removes the error at every request sending
                 this.setState({error: null});

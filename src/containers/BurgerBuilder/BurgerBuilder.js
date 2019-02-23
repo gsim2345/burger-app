@@ -31,9 +31,12 @@ class BurgerBuilder extends Component {
     // best place to fetch data: componentDidMount
     componentDidMount() {
         // we set the ingredients from the database
-        axios.get('https://react-my-burger-e8a39.firebaseio.com/ingredients.json')
+        axios.get('https://react-my-burger-e8a39.firebaseio.com/ingredients.jsonnnn')
         .then(response => {
             this.setState({ingredients: response.data});
+        })
+        .catch(err => {
+            
         });
     }
 
