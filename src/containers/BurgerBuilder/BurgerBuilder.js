@@ -25,18 +25,19 @@ class BurgerBuilder extends Component {
         totalPrice: 4,
         purchasable: false,
         purchasing:false,
-        loading: false
+        loading: false, 
+        error: false
     }
 
     // best place to fetch data: componentDidMount
     componentDidMount() {
         // we set the ingredients from the database
-        axios.get('https://react-my-burger-e8a39.firebaseio.com/ingredients.jsonnnn')
+        axios.get('https://react-my-burger-e8a39.firebaseio.com/ingredients.json')
         .then(response => {
             this.setState({ingredients: response.data});
         })
         .catch(err => {
-            
+            this.setState({error: true});
         });
     }
 
@@ -157,7 +158,7 @@ class BurgerBuilder extends Component {
         
         // we add spinner to those components, that are waiting for the data to load (Burger, BuildControls)
         let orderSummary = null;
-        let burger = <Spinner />
+        let burger = this.state.error ? <p>Ingredients can't be loaded</p> : <Spinner />
 
         //this.state.ingredients !== null
         if (this.state.ingredients) {
