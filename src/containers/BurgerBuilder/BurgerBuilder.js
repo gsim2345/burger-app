@@ -30,6 +30,8 @@ class BurgerBuilder extends Component {
     }
 
     // best place to fetch data: componentDidMount
+    // In the guidelines discouraged is that you immediately call setState(), because It'll trigger an instant re-render 
+    //it's fine to use it in some callback/ async code (ajax ), because it then doesn't run instantly. 
     componentDidMount() {
         // we set the ingredients from the database
         axios.get('https://react-my-burger-e8a39.firebaseio.com/ingredients.json')
