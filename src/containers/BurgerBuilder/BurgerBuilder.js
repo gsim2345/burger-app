@@ -107,7 +107,7 @@ class BurgerBuilder extends Component {
     }
 
     purchaseContinueHandler = () => {
-        
+        /*
         this.setState({loading: true});
 
         const order = {
@@ -146,7 +146,10 @@ class BurgerBuilder extends Component {
                     // set to false, so we close the modal
                     purchasing: false
                 });
-            })
+            }) */
+
+            // we don't send the data yet to fireBase, instead go to checkout page first. 
+            this.props.history.push('/checkout');
     }
 
     render() {
