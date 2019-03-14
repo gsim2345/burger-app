@@ -149,7 +149,20 @@ class BurgerBuilder extends Component {
             }) */
 
             // we don't send the data yet to fireBase, instead go to checkout page first. 
-            this.props.history.push('/checkout');
+            //this.props.history.push('/checkout');
+
+            // we pass in the data as query params:
+            const queryParams = [];
+            for (let i in this.state.ingredients) {
+                // encodes the params
+                queryParams.push(encodeURIComponent(i) + '=' + encodeURIComponent(this.state.ingredients[i]));
+            }
+            const queryString = queryParams.join('&');
+
+            this.props.history.push({
+                pathname: "/checkout",
+                search: '?' + queryString
+            });
     }
 
     render() {

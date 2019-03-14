@@ -18,6 +18,7 @@ class Checkout extends Component {
         }
     }
 
+
     checkoutCancelledHandler = () => {
         // goes back to last page
         this.props.history.goBack();
