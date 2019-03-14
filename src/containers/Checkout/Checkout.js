@@ -19,6 +19,20 @@ class Checkout extends Component {
     }
 
 
+    // we don't need to check componentDidUpdate, because that component will always loads itself, there won't be refresh. 
+    componentDidMount() {
+        // extract queryparameters
+        const query = new URLSearchParams(this.props.location.search);
+
+        const ingredients = {};
+        for (let param of query.entries()) {
+            // ['salad', 1]
+            ingredients[param[0]] = +param[1];
+            // convert to number by adding +
+        }
+        this.setState({ingredients: ingredients});
+    }
+
     checkoutCancelledHandler = () => {
         // goes back to last page
         this.props.history.goBack();
