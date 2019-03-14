@@ -47,7 +47,8 @@ class ContactData extends Component {
                 this.setState({
                     loading: false,
                     // set to false, so we close the modal
-                    purchasing:false
+                    //purchasing:false
+                    //not needed anymore, as we don't use the modal
                 });
             })
             .catch(error => {
@@ -56,7 +57,8 @@ class ContactData extends Component {
                 this.setState({
                     loading: false, 
                     // set to false, so we close the modal
-                    purchasing: false
+                    //purchasing: false
+                    //not needed anymore, as we don't use the modal
                 });
             })
 

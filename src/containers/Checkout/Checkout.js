@@ -18,7 +18,8 @@ class Checkout extends Component {
 
 
     // we don't need to check componentDidUpdate, because that component will always loads itself, there won't be refresh. 
-    componentDidMount() {
+    // we change to componentWillMount, because that happenes before the child component renders , and we can set the state before the child component renders, so we don't send null. 
+    componentWillMount() {
         // extract queryparameters
         const query = new URLSearchParams(this.props.location.search);
         const ingredients = {};
