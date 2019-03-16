@@ -19,6 +19,7 @@ class Checkout extends Component {
 
     // we don't need to check componentDidUpdate, because that component will always loads itself, there won't be refresh. 
     // we change to componentWillMount, because that happenes before the child component renders , and we can set the state before the child component renders, so we don't send null. 
+    // to get rid of componentWillMount() (because it will be deprecated), simply expose the code to the class (a.k.a remove componentWillMount() around the code, and simply leave it as it is. )
     componentWillMount() {
         // extract queryparameters
         const query = new URLSearchParams(this.props.location.search);
