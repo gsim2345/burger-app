@@ -8,11 +8,59 @@ import Input from '../../../components/UI/Input/Input';
 class ContactData extends Component {
 
     state= {
-        name: '',
-        email: '',
-        address: {
-            street: '',
-            postalCode: ''
+        orderForm: {
+            name: {
+                // we want to use normal html element tags as elementType
+                elementType: 'input',
+                // the attributes we can set up for the chosen html tag
+                elementConfig: {
+                    type: 'text',
+                    placeholder: 'Your Name'
+                },
+                value: ''
+            },
+            street: {
+                elementType: 'input',
+                elementConfig: {
+                    type: 'text',
+                    placeholder: 'Street'
+                },
+                value: ''
+            },
+            zipCode: {
+                elementType: 'input',
+                elementConfig: {
+                    type: 'text',
+                    placeholder: 'ZIP Code'
+                },
+                value: ''
+            },
+            country: {
+                elementType: 'input',
+                elementConfig: {
+                    type: 'text',
+                    placeholder: 'Country'
+                },
+                value: ''
+            },
+            email: {
+                elementType: 'input',
+                elementConfig: {
+                    type: 'email',
+                    placeholder: 'Your E-mail'
+                },
+                value: ''
+            },
+            deliveryMethod: {
+                elementType: 'select',
+                elementConfig: {
+                    options: [
+                        {value: 'fastest',displayValue: 'Fastest'},
+                        {value: 'cheapest',displayValue: 'Cheapest'}
+                ]
+                },
+                value: ''
+            },
         },
         loading: false,
     }
@@ -29,16 +77,7 @@ class ContactData extends Component {
             // price in real app would be calculated on the server, so it can't be manipulated
             price: this.props.price,
             // dummy data for now
-            customer:{
-                name: 'Max Schwarzmuller',
-                adress: {
-                    street: 'Teststreet 1',
-                    zipCode: '41351',
-                    country: 'Germany'
-                },
-                email: 'test@test.com'
-            },
-            deliveryMethod: 'fastest'
+            
 
         }
         // we send data to the database - anyname.json(.json needed because of firebase)
