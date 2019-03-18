@@ -86,10 +86,13 @@ class ContactData extends Component {
                         {value: 'cheapest',displayValue: 'Cheapest'}
                 ]
                 },
-                value: ''
+                value: '',
+                // need to add Valid property here as well, because determining if the whole form is valid, we loop through all of them, and if it's missing here, it breaks.  
+                valid: true
             },
         },
-        loading: false,
+        formIsValid: false,
+        loading: false
     }
 
     orderHandler = (event) => {
@@ -178,7 +181,12 @@ class ContactData extends Component {
         // switch in the whole only the formElement that got changed
         updatedOrderForm[inputIdentifier] = updatedFormElement;
 
-        this.setState({orderForm: updatedOrderForm});
+        let formIsValid = true;
+        for (let inputIdentifier in updatedOrderForm) {
+            // only true if both the current formitem and formIsValid is true (it hasn't changed to false earlier)
+            formIsValid = updatedOrderForm[inputIdentifier].valid && formIsValid;
+        }
+        this.setState({orderForm: updatedOrderForm, formIsValid: formIsValid});
     }
 
     render() {
@@ -205,7 +213,7 @@ class ContactData extends Component {
                             changed={(event) => this.inputChangedHandler(event, formElement.id)}
                         />
                     ))}
-                    <Button btnType='Success'>ORDER</Button>
+                    <Button btnType='Success' disabled={!this.state.formIsValid}>ORDER</Button>
                 </form>
         );
         if (this.state.loading) {
