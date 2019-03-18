@@ -66,20 +66,26 @@ class ContactData extends Component {
     }
 
     orderHandler = (event) => {
+        // we don't want to send a request automatically, that would reaload the page, so we need event.preventDefault()
         event.preventDefault();
         
         // moved the code from Burger Builder here. We are sending the data to FireBase from here instead. 
         
         this.setState({loading: true});
 
+        // we want to add our formData into our post request
+        const formData = {};
+        for (let formElementIdentifier in this.state.orderForm) {
+            formData[formElementIdentifier] = this.state.orderForm[formElementIdentifier].value;
+            // counrty: 'Denmark'
+        }
         const order = {
             ingredients: this.props.ingredients,
             // price in real app would be calculated on the server, so it can't be manipulated
             price: this.props.price,
-            // dummy data for now
-            
-
+            orderData: formData
         }
+
         // we send data to the database - anyname.json(.json needed because of firebase)
         axios.post('/orders.json', order)
             .then(response => {
@@ -138,7 +144,7 @@ class ContactData extends Component {
         }
 
         let form = (
-            <form> 
+            <form onSubmit={this.orderHandler}> 
                     {formElementsArray.map(formElement => (
                         <Input 
                             key={formElement.id}
@@ -148,7 +154,7 @@ class ContactData extends Component {
                             changed={(event) => this.inputChangedHandler(event, formElement.id)}
                         />
                     ))}
-                    <Button btnType='Success' clicked={this.orderHandler}>ORDER</Button>
+                    <Button btnType='Success'>ORDER</Button>
                 </form>
         );
         if (this.state.loading) {
