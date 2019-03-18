@@ -107,6 +107,27 @@ class ContactData extends Component {
 
     }
 
+    inputChangedHandler = (event, inputIdentifier) => {
+
+        console.log(event.target.value);
+        // to ensure immutability, we do a lot of cloning 
+        // first we clone the whole orderForm
+        const updatedOrderForm = {
+            ...this.state.orderForm
+        }
+        // then from there we clone only the element to update
+        const updatedFormElement = {
+            ...updatedOrderForm[inputIdentifier]
+        }
+        // switch value to new
+        updatedFormElement.value = event.target.value;
+
+        // switch in the whole only the formElement that got changed
+        updatedOrderForm[inputIdentifier] = updatedFormElement;
+
+        this.setState({orderForm: updatedOrderForm});
+    }
+
     render() {
         const formElementsArray = [];
         for (let key in this.state.orderForm) {
@@ -124,6 +145,7 @@ class ContactData extends Component {
                             elementType={formElement.config.elementType}
                             elementConfig={formElement.config.elementConfig}
                             value={formElement.config.value}
+                            changed={(event) => this.inputChangedHandler(event, formElement.id)}
                         />
                     ))}
                     <Button btnType='Success' clicked={this.orderHandler}>ORDER</Button>
