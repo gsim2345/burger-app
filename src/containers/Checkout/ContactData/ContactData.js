@@ -87,6 +87,8 @@ class ContactData extends Component {
                 ]
                 },
                 value: '',
+                // when looping through, simply returns empty object
+                validation: {},
                 // need to add Valid property here as well, because determining if the whole form is valid, we loop through all of them, and if it's missing here, it breaks.  
                 valid: true
             },
@@ -145,6 +147,11 @@ class ContactData extends Component {
 
     checkValidity(value, rules) {
         let isValid = true;
+
+        /* alternative to handle the problem, that there is no validation object at the last field
+        if (!rules) {
+            return true;
+        } */
 
         if (rules.required) {
             // to remove white spaces from start and end
