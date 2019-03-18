@@ -157,7 +157,6 @@ class ContactData extends Component {
 
     inputChangedHandler = (event, inputIdentifier) => {
 
-        console.log(event.target.value);
         // to ensure immutability, we do a lot of cloning 
         // first we clone the whole orderForm
         const updatedOrderForm = {
@@ -170,7 +169,6 @@ class ContactData extends Component {
         // switch value to new
         updatedFormElement.value = event.target.value;
         updatedFormElement.valid = this.checkValidity(updatedFormElement.value, updatedFormElement.validation);
-        console.log(updatedFormElement);
         // switch in the whole only the formElement that got changed
         updatedOrderForm[inputIdentifier] = updatedFormElement;
 
@@ -195,6 +193,8 @@ class ContactData extends Component {
                             elementConfig={formElement.config.elementConfig}
                             value={formElement.config.value}
                             invalid={!formElement.config.valid}
+                            //checks if validationrules are set for this property at all - returns true/false
+                            shouldValidate={formElement.config.validation}
                             changed={(event) => this.inputChangedHandler(event, formElement.id)}
                         />
                     ))}
