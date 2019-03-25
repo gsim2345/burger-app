@@ -21,6 +21,7 @@ class BurgerBuilder extends Component {
     //}
     state = {
         // we set ingredients to null, we get it from database from now on.
+        // we move over ingredients and totalPrice to the reducer
         ingredients: null,
         totalPrice: 4,
         // the following: local UI states (showing modals, error messages, disable/enable button , etc) Not neceserraly needs Redux
