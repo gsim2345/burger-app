@@ -37,6 +37,7 @@ class BurgerBuilder extends Component {
     componentDidMount() {
         console.log(this.props);
         // we set the ingredients from the database
+        /* we comment out ajax request for now, add to redux later
         axios.get('https://react-my-burger-e8a39.firebaseio.com/ingredients.json')
         .then(response => {
             this.setState({ingredients: response.data});
@@ -44,6 +45,7 @@ class BurgerBuilder extends Component {
         .catch(err => {
             this.setState({error: true});
         });
+        */
     }
 
     updatePurchaseState = (ingredients) => {
