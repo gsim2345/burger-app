@@ -7,6 +7,7 @@ import Input from '../../../components/UI/Input/Input';
 
 class ContactData extends Component {
 
+    // state is used for only local UI here. 
     state= {
         orderForm: {
             name: {

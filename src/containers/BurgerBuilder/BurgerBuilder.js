@@ -23,6 +23,7 @@ class BurgerBuilder extends Component {
         // we set ingredients to null, we get it from database from now on.
         ingredients: null,
         totalPrice: 4,
+        // the following: local UI states (showing modals, error messages, disable/enable button , etc) Not neceserraly needs Redux
         purchasable: false,
         purchasing:false,
         loading: false, 

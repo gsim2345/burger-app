@@ -10,7 +10,7 @@ class Checkout extends Component {
     // button to cancel and go back
     // continue button => load form
 
-    // dummy data for now
+    // has the same properties in state, like in the BurgerBuilder container. We pass the info through query params. A good indicator for using Redux here. 
     state= {
         ingredients: null,
         price: 0
