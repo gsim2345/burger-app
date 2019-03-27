@@ -65,20 +65,11 @@ class BurgerBuilder extends Component {
     }
 
     purchaseContinueHandler = () => {
-    
-            // we pass in the data as query params:
-            const queryParams = [];
-            for (let i in this.state.ingredients) {
-                // encodes the params
-                queryParams.push(encodeURIComponent(i) + '=' + encodeURIComponent(this.state.ingredients[i]));
-            }
-            // adding in total price as well
-            queryParams.push('price=' + this.state.totalPrice);
-            const queryString = queryParams.join('&');
+            // we use Redux now, no longer need to pass through query params. 
+            // get the ingredients from the Redux store instead
 
             this.props.history.push({
-                pathname: "/checkout",
-                search: '?' + queryString
+                pathname: "/checkout"
             });
     }
 

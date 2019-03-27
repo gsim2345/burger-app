@@ -1,4 +1,5 @@
 import React, { Component} from 'react';
+import { connect } from 'react-redux';
 import axios from '../../../axios-orders';
 import Button from '../../../components/UI/Button/Button';
 import Spinner from '../../../components/UI/Spinner/Spinner';
@@ -113,7 +114,7 @@ class ContactData extends Component {
             // counrty: 'Denmark'
         }
         const order = {
-            ingredients: this.props.ingredients,
+            ingredients: this.props.ings,
             // price in real app would be calculated on the server, so it can't be manipulated
             price: this.props.price,
             orderData: formData
@@ -238,4 +239,11 @@ class ContactData extends Component {
 
 }
 
-export default ContactData;
+const mapStateToProps = state => {
+    return {
+        ings: state.ingredients,
+        price: state.totalPrice
+    }
+}
+
+export default connect(mapStateToProps)(ContactData);

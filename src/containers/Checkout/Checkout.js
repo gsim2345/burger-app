@@ -1,44 +1,10 @@
 import React, { Component } from 'react';
 import { Route } from 'react-router-dom';
+import { connect } from 'react-redux';
 import CheckoutSummary from '../../components/Order/CheckoutSummary/CheckoutSummary';
 import ContactData from './ContactData/ContactData';
 
 class Checkout extends Component {
-
-    // summary with price
-    // burger itself
-    // button to cancel and go back
-    // continue button => load form
-
-    // has the same properties in state, like in the BurgerBuilder container. We pass the info through query params. A good indicator for using Redux here. 
-    state= {
-        ingredients: null,
-        price: 0
-    }
-
-
-    // we don't need to check componentDidUpdate, because that component will always loads itself, there won't be refresh. 
-    // we change to componentWillMount, because that happenes before the child component renders , and we can set the state before the child component renders, so we don't send null. 
-    // to get rid of componentWillMount() (because it will be deprecated), simply expose the code to the class (a.k.a remove componentWillMount() around the code, and simply leave it as it is. )
-    componentWillMount() {
-        // extract queryparameters
-        const query = new URLSearchParams(this.props.location.search);
-        const ingredients = {};
-        let price = 0;
-
-        for (let param of query.entries()) {
-            // ['salad', 1]
-
-            if (param[0] === 'price') {
-                price = param[1];
-            } else {
-                ingredients[param[0]] = +param[1];
-            // convert to number by adding +
-            }
-            
-        }
-        this.setState({ingredients: ingredients, totalPrice: price});
-    }
 
     checkoutCancelledHandler = () => {
         // goes back to last page
@@ -54,15 +20,27 @@ class Checkout extends Component {
         return (
             <div>
                 <CheckoutSummary 
-                ingredients={this.state.ingredients}
+                ingredients={this.props.ings}
                 checkoutCancelled={this.checkoutCancelledHandler}
                 checkoutContinued={this.checkoutContinuedHandler}/>
-                <Route path={this.props.match.path + '/contact-data'} render={(props) => (<ContactData ingredients={this.state.ingredients} price={this.state.totalPrice} {...props}/>)}/>
-                {/* passing in router params with props*/}
+                <Route 
+                    path={this.props.match.path + '/contact-data'} 
+                    component={ContactData} />
+                {/* we no longer need pass in props, that will go through Redux, so we simply add as component, and not render as JSX*/}
             </div>
         );
     }
-
 }
 
-export default Checkout;
+// we use Redux now, no longer need to extract query params. 
+// get the ingredients from the Redux store instead
+
+const mapStateToProps = state => {
+    return {
+        ings: state.ingredients
+    }
+}
+
+// we don't do mapDispatchToProps here, as there is nothing to dispatch
+
+export default connect(mapStateToProps)(Checkout);
