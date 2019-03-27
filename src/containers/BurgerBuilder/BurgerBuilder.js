@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 //import Aux from '../../hoc/Aux/Aux';
 import Burger from '../../components/Burger/Burger';
 import BuildControls from '../../components/Burger/BuildControls/BuildControls';
@@ -7,6 +8,7 @@ import OrderSummary from '../../components/Burger/OrderSummary/OrderSummary'
 import Spinner from '../../components/UI/Spinner/Spinner';
 import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
 import axios from '../../axios-orders';
+import * as actionTypes from '../../store/actions';
 
 const INGREDIENT_PRICES = {
     salad: 0.5,
@@ -22,7 +24,6 @@ class BurgerBuilder extends Component {
     state = {
         // we set ingredients to null, we get it from database from now on.
         // we move over ingredients and totalPrice to the reducer
-        ingredients: null,
         totalPrice: 4,
         // the following: local UI states (showing modals, error messages, disable/enable button , etc) Not neceserraly needs Redux
         purchasable: false,
@@ -35,7 +36,7 @@ class BurgerBuilder extends Component {
     // In the guidelines discouraged is that you immediately call setState(), because It'll trigger an instant re-render 
     //it's fine to use it in some callback/ async code (ajax ), because it then doesn't run instantly. 
     componentDidMount() {
-        console.log(this.props);
+        console.log(this.props.ings);
         // we set the ingredients from the database
         /* we comment out ajax request for now, add to redux later
         axios.get('https://react-my-burger-e8a39.firebaseio.com/ingredients.json')
@@ -111,50 +112,7 @@ class BurgerBuilder extends Component {
     }
 
     purchaseContinueHandler = () => {
-        /*
-        this.setState({loading: true});
-
-        const order = {
-            ingredients: this.state.ingredients,
-            // price in real app would be calculated on the server, so it can't be manipulated
-            price: this.state.totalPrice,
-            // dummy data for now
-            customer:{
-                name: 'Max Schwarzmuller',
-                adress: {
-                    street: 'Teststreet 1',
-                    zipCode: '41351',
-                    country: 'Germany'
-                },
-                email: 'test@test.com'
-            },
-            deliveryMethod: 'fastest'
-
-        }
-        // we send data to the database - anyname.json(.json needed because of firebase)
-        axios.post('/orders.json', order)
-            .then(response => {
-                console.log(response);
-                // stop spinner
-                this.setState({
-                    loading: false,
-                    // set to false, so we close the modal
-                    purchasing:false
-                });
-            })
-            .catch(error => {
-                console.log(error);
-                // stop loading spinner
-                this.setState({
-                    loading: false, 
-                    // set to false, so we close the modal
-                    purchasing: false
-                });
-            }) */
-
-            // we don't send the data yet to fireBase, instead go to checkout page first. 
-            //this.props.history.push('/checkout');
-
+    
             // we pass in the data as query params:
             const queryParams = [];
             for (let i in this.state.ingredients) {
@@ -173,7 +131,7 @@ class BurgerBuilder extends Component {
 
     render() {
         const disabledInfo = {
-            ...this.state.ingredients
+            ...this.props.ings
         }
         for (let key in disabledInfo) {
             disabledInfo[key] = disabledInfo[key] <= 0 // returns true/false
@@ -186,13 +144,14 @@ class BurgerBuilder extends Component {
         let burger = this.state.error ? <p>Ingredients can't be loaded</p> : <Spinner />
 
         //this.state.ingredients !== null
-        if (this.state.ingredients) {
+        
+        if (this.props.ings) {
             burger = (
                 <>
-                    <Burger ingredients={this.state.ingredients}/>
+                    <Burger ingredients={this.props.ings}/>
                     <BuildControls 
-                    ingredientAdded={this.addIngredientHandler}
-                    ingredientRemoved={this.removeIngredientHandler}
+                    ingredientAdded={this.props.onIngredientAdded}
+                    ingredientRemoved={this.props.onIngredientRemoved}
                     disabled={disabledInfo}
                     purchasable={this.state.purchasable}
                     ordered={this.purchaseHandler}
@@ -202,7 +161,7 @@ class BurgerBuilder extends Component {
             );
 
             orderSummary = <OrderSummary 
-                ingredients={this.state.ingredients}
+                ingredients={this.props.ings}
                 purchaseCancelled={this.purchaseCancelHandler}
                 purchaseContinued={this.purchaseContinueHandler}
                 price={this.state.totalPrice}
@@ -223,5 +182,19 @@ class BurgerBuilder extends Component {
     }
 }
 
+const mapStateToProps = state => {
+    return { 
+        ings: state.ingredients
+    };
+}
+
+const mapDispatchToProps = dispatch => {
+    return {
+        onIngredientAdded: (ingName) => dispatch({type: actionTypes.ADD_INGREDIENT, ingredientName: ingName}),
+        onIngredientRemoved: (ingName) => dispatch({type: actionTypes.REMOVE_INGREDIENT, ingredientName: ingName})
+    }
+}
+
 // exporting the axios instance we use
-export default withErrorHandler(BurgerBuilder, axios);
+// can add as many hoc here as we want
+export default connect(mapStateToProps, mapDispatchToProps) (withErrorHandler(BurgerBuilder, axios));

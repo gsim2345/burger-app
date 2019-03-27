@@ -1,4 +1,4 @@
-import * as actionTypes from './action.js';
+import * as actionTypes from './actions.js';
 
 const initialState = {
     // temporarily we set ingredients without the ajax request
@@ -28,7 +28,7 @@ const reducer = (state = initialState, action ) => {
                 ingredients: {
                     // need to copy this as well, because objects are still pointing to the old object. Copy first, than mutate
                     ...state.ingredients,
-                    [action.ingredientName]: state.ingredients[action.ingredientName] -1
+                    [action.ingredientName]: state.ingredients[action.ingredientName] - 1
                 }
             }
         default: 
