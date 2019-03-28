@@ -8,7 +8,8 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import reducer from './store/reducer';
 
-const store = createStore(reducer);
+const store = createStore(reducer, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
+// add redux web tools to analize the store
 
 const app = (
     // the Provider needs to wrap everything else
