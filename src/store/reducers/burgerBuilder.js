@@ -1,4 +1,4 @@
-import * as actionTypes from './actions.js';
+import * as actionTypes from '../actions/actionTypes.js/index.js';
 
 const initialState = {
     // temporarily we set ingredients without the ajax request
