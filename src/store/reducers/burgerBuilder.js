@@ -40,7 +40,14 @@ const reducer = (state = initialState, action ) => {
         case actionTypes.SET_INGREDIENTS:
             return {
                 ...state, 
-                ingredients: action.ingredients,
+                ingredients: {
+                    // to give the order of ingredients what we want, set manually:
+                    salad: action.ingredients.salad,
+                    bacon: action.ingredients.bacon,
+                    cheese: action.ingredients.cheese,
+                    meat: action.ingredients.meat
+                },
+
                 // reset error to false in case there was an error already erlier
                 error: false
             }
