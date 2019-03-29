@@ -29,9 +29,8 @@ class BurgerBuilder extends Component {
     //it's fine to use it in some callback/ async code (ajax ), because it then doesn't run instantly. 
     componentDidMount() {
         console.log(this.props.ings);
-    
-        
-        
+        // this is replacing the direct axios call now, and goes through Redux
+        this.props.onInitIngredients();
     }
 
     // need to update the purchasable prop whenever our ingredients change
@@ -77,7 +76,7 @@ class BurgerBuilder extends Component {
         
         // we add spinner to those components, that are waiting for the data to load (Burger, BuildControls)
         let orderSummary = null;
-        let burger = this.state.error ? <p>Ingredients can't be loaded</p> : <Spinner />
+        let burger = this.props.error ? <p>Ingredients can't be loaded</p> : <Spinner />
         // we pass error with props and not through state anymore. But for that it needs to be part of our Redux state . 
 
         //this.state.ingredients !== null
@@ -124,14 +123,16 @@ class BurgerBuilder extends Component {
 const mapStateToProps = state => {
     return { 
         ings: state.ingredients,
-        price: state.totalPrice
+        price: state.totalPrice,
+        error: state.error
     };
 }
 
 const mapDispatchToProps = dispatch => {
     return {
         onIngredientAdded: (ingName) => dispatch(burgerBuilderActions.addIngredient(ingName)),
-        onIngredientRemoved: (ingName) => dispatch(burgerBuilderActions.removeIngredient(ingName))
+        onIngredientRemoved: (ingName) => dispatch(burgerBuilderActions.removeIngredient(ingName)),
+        onInitIngredients: () => dispatch(burgerBuilderActions.initIngredients())
     }
 }
 
