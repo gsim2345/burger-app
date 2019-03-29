@@ -20,9 +20,8 @@ class BurgerBuilder extends Component {
         // we move over ingredients and totalPrice to the reducer
        
         // the following: local UI states (showing modals, error messages, disable/enable button , etc) Not neceserraly needs Redux
-        purchasing:false,
-        loading: false, 
-        error: false
+        purchasing:false
+
     }
 
     // best place to fetch data: componentDidMount
@@ -31,15 +30,7 @@ class BurgerBuilder extends Component {
     componentDidMount() {
         console.log(this.props.ings);
     
-        // we set the ingredients from the database
         
-        axios.get('https://react-my-burger-e8a39.firebaseio.com/ingredients.json')
-        .then(response => {
-            this.setState({ingredients: response.data});
-        })
-        .catch(err => {
-            this.setState({error: true});
-        });
         
     }
 
@@ -87,6 +78,7 @@ class BurgerBuilder extends Component {
         // we add spinner to those components, that are waiting for the data to load (Burger, BuildControls)
         let orderSummary = null;
         let burger = this.state.error ? <p>Ingredients can't be loaded</p> : <Spinner />
+        // we pass error with props and not through state anymore. But for that it needs to be part of our Redux state . 
 
         //this.state.ingredients !== null
         
@@ -112,9 +104,11 @@ class BurgerBuilder extends Component {
                 price={this.props.price}
                 />
         }
+        // we don't need that anymore, we are not doing anything asyncrunous when loading the modal
+        /*
         if(this.state.loading) {
             orderSummary = <Spinner />
-        }
+        } */
         
         return(
             <>

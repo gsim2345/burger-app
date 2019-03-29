@@ -1,14 +1,11 @@
 import * as actionTypes from '../actions/actionTypes';
 
 const initialState = {
-    // temporarily we set ingredients without the ajax request
-    ingredients: {
-        salad: 0,
-        bacon: 0,
-        cheese: 0,
-        meat: 0
-    },
-    totalPrice: 4
+    // we set initially null, before we fetch from the DB
+    ingredients: null,
+    totalPrice: 4,
+    // add error to initalstate. if our loading fails, we set to true
+    error: false
 }
 
 const INGREDIENT_PRICES = {
