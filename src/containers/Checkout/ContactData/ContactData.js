@@ -5,6 +5,8 @@ import Button from '../../../components/UI/Button/Button';
 import Spinner from '../../../components/UI/Spinner/Spinner';
 import classes from './ContactData.module.css';
 import Input from '../../../components/UI/Input/Input';
+import withErrorHandler from '../../../hoc/withErrorHandler/withErrorHandler';
+import * as actions from '../../../store/actions/index';
 
 class ContactData extends Component {
 
@@ -105,7 +107,8 @@ class ContactData extends Component {
         
         // moved the code from Burger Builder here. We are sending the data to FireBase from here instead. 
         
-        this.setState({loading: true});
+        // won't handle loading from here anymore
+        //this.setState({loading: true});
 
         // we want to add our formData into our post request
         const formData = {};
@@ -119,6 +122,8 @@ class ContactData extends Component {
             price: this.props.price,
             orderData: formData
         }
+
+        this.props.onOrderBurger(order);
 
     }
 
@@ -221,4 +226,8 @@ const mapStateToProps = state => {
     }
 }
 
-export default connect(mapStateToProps)(ContactData);
+const mapDispatchToProps = dispatch => {
+    onOrderBurger : (orderData) => dispatch(actions.purchaseBurgerStart(orderData))
+}
+
+export default connect(mapStateToProps)(withErrorHandler(ContactData, axios));
