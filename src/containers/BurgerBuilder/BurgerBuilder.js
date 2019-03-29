@@ -30,8 +30,9 @@ class BurgerBuilder extends Component {
     //it's fine to use it in some callback/ async code (ajax ), because it then doesn't run instantly. 
     componentDidMount() {
         console.log(this.props.ings);
+    
         // we set the ingredients from the database
-        /* we comment out ajax request for now, add to redux later
+        
         axios.get('https://react-my-burger-e8a39.firebaseio.com/ingredients.json')
         .then(response => {
             this.setState({ingredients: response.data});
@@ -39,7 +40,7 @@ class BurgerBuilder extends Component {
         .catch(err => {
             this.setState({error: true});
         });
-        */
+        
     }
 
     // need to update the purchasable prop whenever our ingredients change
