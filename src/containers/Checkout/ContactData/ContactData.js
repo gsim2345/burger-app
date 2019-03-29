@@ -120,31 +120,6 @@ class ContactData extends Component {
             orderData: formData
         }
 
-        // we send data to the database - anyname.json(.json needed because of firebase)
-        axios.post('/orders.json', order)
-            .then(response => {
-                console.log(response);
-                // stop spinner
-                this.setState({
-                    loading: false,
-                    // set to false, so we close the modal
-                    //purchasing:false
-                    //not needed anymore, as we don't use the modal
-                });
-                // we redirect to the root 
-                this.props.history.push('/');
-            })
-            .catch(error => {
-                console.log(error);
-                // stop loading spinner
-                this.setState({
-                    loading: false, 
-                    // set to false, so we close the modal
-                    //purchasing: false
-                    //not needed anymore, as we don't use the modal
-                });
-            })
-
     }
 
     checkValidity(value, rules) {
