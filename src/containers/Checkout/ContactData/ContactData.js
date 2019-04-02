@@ -90,10 +90,9 @@ class ContactData extends Component {
                         {value: 'cheapest',displayValue: 'Cheapest'}
                 ]
                 },
-                value: '',
-                // when looping through, simply returns empty object
+                // added default value so it doesn't return empty is nothing is selected
+                value: 'fastest',
                 validation: {},
-                // need to add Valid property here as well, because determining if the whole form is valid, we loop through all of them, and if it's missing here, it breaks.  
                 valid: true
             },
         },
