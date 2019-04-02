@@ -18,10 +18,17 @@ export const purchaseBurgerFail = (error) => {
     }
 }
 
+export const purchaseBurgerStart = () => {
+    return {
+        type: actionTypes.PURCHASE_BURGER_START
+    };
+}
+
 // asyncronous action creators
 
-export const purchaseBurgerStart = (orderData) => {
+export const purchaseBurger = (orderData) => {
     return dispatch => {
+        dispatch(purchaseBurgerStart());
         axios.post('/orders.json', orderData)
             .then(response => {
                 // stop spinner
