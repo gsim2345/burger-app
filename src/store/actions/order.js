@@ -32,7 +32,7 @@ export const purchaseBurger = (orderData) => {
         axios.post('/orders.json', orderData)
             .then(response => {
                 // stop spinner
-                dispatch(purchaseBurgerSuccess(response.data, orderData));
+                dispatch(purchaseBurgerSuccess(response.data.name, orderData));
                 // we redirected to the root earlier, but we don't use routing now
                 //this.props.history.push('/');
             })
