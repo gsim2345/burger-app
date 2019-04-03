@@ -3,8 +3,14 @@ import { Route, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import CheckoutSummary from '../../components/Order/CheckoutSummary/CheckoutSummary';
 import ContactData from './ContactData/ContactData';
+import * as actions from '../../store/actions/index';
 
 class Checkout extends Component {
+
+    componentWillMount() {
+        // we dispatch our init action here
+        this.props.onInitPurchase();
+    }
 
     checkoutCancelledHandler = () => {
         // goes back to last page
@@ -21,8 +27,11 @@ class Checkout extends Component {
         // we redirect to burger builder page, where there is a loader until no ingredients are loaded. 
         let summary = <Redirect to='/'/>;
         if (this.props.ings) {
+            // we also redirect if the purchase is finished
+            const purchasedRedirect = this.props.purchased ? <Redirect to='/'/> : null;
             summary = (
                 <div>
+                    {purchasedRedirect}
                     <CheckoutSummary 
                     ingredients={this.props.ings}
                     checkoutCancelled={this.checkoutCancelledHandler}
@@ -44,10 +53,15 @@ class Checkout extends Component {
 
 const mapStateToProps = state => {
     return {
-        ings: state.burgerBuilder.ingredients
+        ings: state.burgerBuilder.ingredients,
+        purchased: state.order.purchased
     }
 }
 
-// we don't do mapDispatchToProps here, as there is nothing to dispatch
+const mapDispatchToProp = dispatch => {
+    return {
+        onInitPurchase: () => dispatch(actions.purchaseInit())
+    }
+}
 
-export default connect(mapStateToProps)(Checkout);
+export default connect(mapStateToProps, mapDispatchToProp)(Checkout);
