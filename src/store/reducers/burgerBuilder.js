@@ -47,7 +47,8 @@ const reducer = (state = initialState, action ) => {
                     cheese: action.ingredients.cheese,
                     meat: action.ingredients.meat
                 },
-
+                // we need to update the totalprice too at every  Init , or it keeps the earlier value
+                totalPrice: 4,
                 // reset error to false in case there was an error already erlier
                 error: false
             }
