@@ -7,10 +7,15 @@ import * as actions from '../../store/actions/index';
 
 class Checkout extends Component {
 
+    // it is too late to call onInitPurchase() in componentWillMount in the Checkout container 
+    // it runs before render runs, but it doesn't prevent the rendering with the old props we received, where the purchased is still true
+    // we can't dispatch this action here
+    /*
     componentWillMount() {
         // we dispatch our init action here
+        
         this.props.onInitPurchase();
-    }
+    } */
 
     checkoutCancelledHandler = () => {
         // goes back to last page
@@ -58,10 +63,11 @@ const mapStateToProps = state => {
     }
 }
 
+/* WE don't need it here, instead in BurgerBuilder, after order now button clicked
 const mapDispatchToProp = dispatch => {
     return {
         onInitPurchase: () => dispatch(actions.purchaseInit())
     }
-}
+}*/
 
-export default connect(mapStateToProps, mapDispatchToProp)(Checkout);
+export default connect(mapStateToProps)(Checkout);
