@@ -1,3 +1,5 @@
+// not using our axios-order instance, that has a different base URL
+import axios from 'axios';
 import * as actionTypes from './actionTypes';
 
 export const authStart = () => {
@@ -24,5 +26,20 @@ export const auth = (email, password) => {
     return dispatch => {
         // authenticate the user
         dispatch(authStart());
+        const authData = {
+            email: email,
+            password: password,
+            returnSecureToken: true
+        }
+        console.log(authData);
+        axios.post('https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser?key=AIzaSyBoxIoD-SgooBc6S9RpO4Xoy3vSviXKniM', authData)
+        .then(response => {
+            console.log(response);
+            dispatch(authSuccess(response.data));
+        })
+        .catch(error => {
+            console.log(error);
+            dispatch(authFail(error));
+        });
     }
 }
