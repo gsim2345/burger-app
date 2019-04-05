@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 
 import Input from '../../components/UI/Input/Input';
 import Button from '../../components/UI/Button/Button';
+import classes from './Auth.module.css';
 
 class Auth extends Component {
     //we use local state, not Redux here, as it only will be used here, no need to share with other components
@@ -42,10 +43,10 @@ class Auth extends Component {
 
     render() {
         const formElementsArray = [];
-        for (let key in this.state.orderForm) {
+        for (let key in this.state.controls) {
             formElementsArray.push({
                 id: key,
-                config: this.state.orderForm[key]
+                config: this.state.controls[key]
             });
         }
 
@@ -64,7 +65,7 @@ class Auth extends Component {
             
         ));
         return (
-            <div>
+            <div className={classes.Auth}>
                 <form>
                     {form}
                     <Button btnType='Success' >SUBMIT</Button>
