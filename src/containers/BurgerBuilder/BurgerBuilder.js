@@ -48,7 +48,14 @@ class BurgerBuilder extends Component {
 
     purchaseHandler = () => {
         //this.setState works only with arrow functions (because of 'this')
-        this.setState({purchasing: true});
+        // we want to set purchasing to true, if the user is logged in, otherwise redirect
+        if (this.props.isAuthenticated) {
+            this.setState({purchasing: true});
+        } else {
+            // coming from react router
+            this.props.history.push('/auth');
+        }
+        
     }
 
     purchaseCancelHandler = () => {
