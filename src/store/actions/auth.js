@@ -23,6 +23,22 @@ export const authFail = (error) => {
     }
 }
 
+export const logout = () => {
+        return {
+            type: actionTypes.AUTH_LOGOUT
+        }
+}
+
+export const checkAuthTimeout = (expirationTime) => {
+    // we need dispatch, as we run async code
+    return dispatch => {
+        setTimeout(() => {
+            dispatch(logout())
+            // expirationTime is coming in milliseconds, we need to turn it into seconds
+        }, expirationTime * 1000);
+    }
+}
+
 export const auth = (email, password, isSignup) => {
     return dispatch => {
         // authenticate the user
@@ -43,6 +59,7 @@ export const auth = (email, password, isSignup) => {
             // idToken: the token 
             // refreshToken needs if we don't want the login to expire in an hour. 
             dispatch(authSuccess(response.data.idToken, response.data.localId));
+            dispatch(checkAuthTimeout(response.data.expiresIn));
         })
         .catch(error => {
             console.log(error.response);
