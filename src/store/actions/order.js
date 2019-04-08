@@ -73,10 +73,12 @@ export const fetchOrdersStart = () => {
     }
 }
 
-export const fetchOrders = () => {
+export const fetchOrders = (token) => {
+    // another way of getting the token from state here:
+    // return (dispatch, getState)
     return dispatch => {
         dispatch(fetchOrdersStart());
-        axios.get('orders.json')
+        axios.get('orders.json?auth=' + token)
             .then(res => {
                 
                 const fetchedOrders = [];

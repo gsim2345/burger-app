@@ -58,6 +58,27 @@ export const auth = (email, password, isSignup) => {
             // localId: userId
             // idToken: the token 
             // refreshToken needs if we don't want the login to expire in an hour. 
+            // we use the token to make requests to protected resources
+            // change in Firebase; Database/Rules, so the whole database can only be accessed by authenticated user: 
+            //"rules": {
+            //".read": 'auth != null',
+            //".write": 'auth != null'
+            //}
+            /*
+            A more specific rule, only needs to be authenticated to see the orders
+            {
+            "rules": {
+    	        "ingredients": {
+                    ".read": "true",
+    		        ".write": "true"
+                },
+    	        "orders": {
+      	            ".read": "auth != null",
+                    ".write": "auth != null"
+                }
+            }
+            } */
+            
             dispatch(authSuccess(response.data.idToken, response.data.localId));
             dispatch(checkAuthTimeout(response.data.expiresIn));
         })
