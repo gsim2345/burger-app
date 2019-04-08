@@ -1,4 +1,5 @@
 import React, { Component} from 'react';
+import { connect } from 'react-redux';
 //import Aux from '../Aux/Aux';
 import classes from './Layout.module.css';
 import Toolbar from '../../components/Navigation/Toolbar/Toolbar';
@@ -28,9 +29,11 @@ class Layout extends Component {
             // needs a wrapper root element , a div, or a hoc (Aux), (can return only array or wrapped componenets)
             <>
                 <Toolbar 
+                isAuth={this.props.isAuthenticated}
                 drawerToggleClicked={this.sideDrawerToggleHandler}
                 />
                 <SideDrawer 
+                isAuth={this.props.isAuthenticated}
                 closed={this.sideDrawerClosedHandler}
                 open={this.state.showSideDrawer}/>
                 <main className={classes.Content}>
@@ -41,4 +44,11 @@ class Layout extends Component {
     }
 } 
 
-export default Layout;
+const mapStateToProps = state => {
+    return {
+        isAuthenticated: state.auth.token !== null
+    }
+}
+
+// we connect this to Redux, so we can get the Auth state here, and pass that to Navigationitems 
+export default connect(mapStateToProps)(Layout);
