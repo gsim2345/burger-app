@@ -45,8 +45,9 @@ export const auth = (email, password, isSignup) => {
             dispatch(authSuccess(response.data.idToken, response.data.localId));
         })
         .catch(error => {
-            console.log(error);
-            dispatch(authFail(error));
+            console.log(error.response);
+            // this is how error object can be accessed with Firebase: error.response.data.error
+            dispatch(authFail(error.response.data.error));
         });
     }
 }
