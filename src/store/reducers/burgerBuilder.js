@@ -6,7 +6,9 @@ const initialState = {
     ingredients: null,
     totalPrice: 4,
     // add error to initalstate. if our loading fails, we set to true
-    error: false
+    error: false, 
+    // building the burger. We need, so we know if we get redirected to the login page while bilding the burger, we don't lose the information. 
+    building: false
 }
 
 const INGREDIENT_PRICES = {
@@ -33,7 +35,8 @@ const addIngredient = (state, action) => {
             const updatedIngredients = updateObject(state.ingredients, updatedIngredient);
             const updatedState = {
                 ingredients: updatedIngredients,
-                totalPrice: state.totalPrice + INGREDIENT_PRICES[action.ingredientName]
+                totalPrice: state.totalPrice + INGREDIENT_PRICES[action.ingredientName],
+                building: true
             }
             return updateObject(state, updatedState);
 }
@@ -43,7 +46,8 @@ const removeIngredient = (state, action) => {
             const updatedIngrs = updateObject(state.ingredients, updatedIngr);
             const updatedSt = {
                 ingredients: updatedIngrs,
-                totalPrice: state.totalPrice - INGREDIENT_PRICES[action.ingredientName]
+                totalPrice: state.totalPrice - INGREDIENT_PRICES[action.ingredientName],
+                building: true
             }
             return updateObject(state, updatedSt);
 }
@@ -60,7 +64,9 @@ const setIngredients = (state, action) => {
         // we need to update the totalprice too at every  Init , or it keeps the earlier value
         totalPrice: 4,
         // reset error to false in case there was an error already erlier
-        error: false
+        error: false,
+        // set to false, showing there is no burger building
+        building: false
     })
 }
 
