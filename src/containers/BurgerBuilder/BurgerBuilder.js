@@ -52,6 +52,7 @@ class BurgerBuilder extends Component {
         if (this.props.isAuthenticated) {
             this.setState({purchasing: true});
         } else {
+            // will always go to the checkout page if not authenticated, even if no burger was built. We handle this in Auth.
             this.props.onSetAuthRedirectPath('/checkout');
             // coming from react router
             this.props.history.push('/auth');

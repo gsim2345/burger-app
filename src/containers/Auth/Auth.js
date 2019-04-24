@@ -45,6 +45,15 @@ class Auth extends Component {
         isSignup: true
     }
 
+    componentDidMount() {
+        // always tries to redirect  to checkout even if no burger is built, we have to fix that here. 
+        // So if no burger is built, and the redirect path is not the main page, we redirect to main page.
+        if (!this.props.buildingBurger && this.props.authRedirectPath !== '/') {
+            // redirects to '/'
+            this.props.onSetAuthRedirectPath();
+        }
+    }
+
     checkValidity(value, rules) {
         let isValid = true;
 
@@ -129,7 +138,7 @@ class Auth extends Component {
 
         let authRedirect = null;
         if (this.props.isAuthenticated) {
-            authRedirect = <Redirect to='/'/>
+            authRedirect = <Redirect to={this.props.authRedirect}/>
         }
 
         return (
@@ -152,13 +161,16 @@ const mapStateToProps = state => {
     return {
         loading: state.auth.loading,
         error: state.auth.error,
-        isAuthenticated: state.auth.token !== null
+        isAuthenticated: state.auth.token !== null,
+        buildingBurger: state.burgerBuilder.building,
+        authRedirect: state.auth.authRedirectPath
     }
 }
 
 const mapDispatchToProps = dispatch => {
     return {
-        onAuth: (email, password, isSignup) => dispatch(actions.auth(email, password, isSignup))
+        onAuth: (email, password, isSignup) => dispatch(actions.auth(email, password, isSignup)),
+        onSetAuthRedirectPath: () => dispatch(actions.setAuthRedirectPath('/'))
     }
 }
 
