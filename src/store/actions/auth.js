@@ -118,12 +118,12 @@ export const authCheckState = () => {
         } else {
             // we get back from local storage a string, and need to convert it into a Date object.
             const expirationDate = new Date(localStorage.getItem('expirationDate'));
-            if (expirationDate > new Date()) {
+            if (expirationDate <= new Date()) {
+                dispatch(logout());
+            } else {
                 const userId = localStorage.getItem('userId');
                 dispatch(authSuccess(token, userId));
-                dispatch(checkAuthTimeout(expirationDate.getSeconds() - new Date().getSeconds()));
-            } else {
-                dispatch(logout());
+                dispatch(checkAuthTimeout((expirationDate.getTime() - new Date().getTime())/ 1000)) ;
             }
         }
     };
