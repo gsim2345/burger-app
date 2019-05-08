@@ -94,6 +94,15 @@ export const auth = (email, password, isSignup) => {
             localStorage.setItem('userId', response.data.localId);
             dispatch(authSuccess(response.data.idToken, response.data.localId));
             dispatch(checkAuthTimeout(response.data.expiresIn));
+
+            // ABOUT REFRESH TOKENS: 
+            // the id token expires after one hour
+            // we also get a refresh token that doesn't expire. 
+            // We can store that too in local storage, and with every http request we send the refresh token, and exchange with a new id token:
+            // https://firebase.google.com/docs/reference/rest/auth?authuser=0#section-refresh-token
+            // that gives the user experience that the user never logs out. 
+            // Using  localStorage => Make sure to be protected about XSS attacks
+            // Using Cookies => Make sure to protect against CSRF attacks
         })
         .catch(error => {
             console.log(error.response);
