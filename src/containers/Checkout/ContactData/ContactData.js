@@ -118,9 +118,12 @@ class ContactData extends Component {
             ingredients: this.props.ings,
             // price in real app would be calculated on the server, so it can't be manipulated
             price: this.props.price,
-            orderData: formData
+            orderData: formData,
+            // we want to also add userId, it is already stored in Redux store. 
+            userId: this.props.userId
         }
 
+        console.log(order);
         this.props.onOrderBurger(order, this.props.token);
 
     }
@@ -222,7 +225,8 @@ const mapStateToProps = state => {
         ings: state.burgerBuilder.ingredients,
         price: state.burgerBuilder.totalPrice,
         loading: state.order.loading,
-        token: state.auth.token
+        token: state.auth.token,
+        userId: state.auth.userId
     }
 }
 

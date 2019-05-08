@@ -26,6 +26,7 @@ export const purchaseBurgerStart = () => {
 
 // asyncronous action creators
 
+// we want to userId being part of orderData, so we can send it to the backend => in contactData
 export const purchaseBurger = (orderData, token) => {
     return dispatch => {
         dispatch(purchaseBurgerStart());
