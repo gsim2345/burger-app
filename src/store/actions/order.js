@@ -74,14 +74,40 @@ export const fetchOrdersStart = () => {
     }
 }
 
-export const fetchOrders = (token) => {
+export const fetchOrders = (token, userId) => {
     // another way of getting the token from state here:
     // return (dispatch, getState)
     return dispatch => {
         dispatch(fetchOrdersStart());
-        axios.get('orders.json?auth=' + token)
+        //https://firebase.google.com/docs/database/rest/retrieve-data?authuser=0#section-rest-filtering
+        // if we want to use filtering , need to adjust rules in Firebase: Add .indexOn to Orders:
+        /*
+        {
+        "rules": {
+    	    "ingredients": {
+            ".read": "true",
+    		".write": "true"
+            },
+    	    "orders": {
+      	        ".read": "auth != null",
+                ".write": "auth != null",
+                ".indexOn" : ["userId"]
+            }
+        }
+        } */
+        // In a real application add more security: https://firebase.google.com/docs/database/security/
+        const queryParams = '?auth=' + token + '&orderBy="userId"&equalTo="' + userId + '"';
+        
+        axios.get('orders.json' + queryParams)
+        /* alternative syntax:
+        axios.get('/orders.json', {
+            params: {
+                auth: token,
+                orderBy: '"userId"',
+                equalTo: `"${userId}"`,
+            }
+          }) */
             .then(res => {
-                
                 const fetchedOrders = [];
                 for (let key in res.data) {
                     // we are pushing an object, with the copy of data, and add key manually
